@@ -1,0 +1,22 @@
+{
+  "name": "mdrn",
+  "version": "1.0.0",
+  "description": "mdrn",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suiGn/mdrn.git"
+  },
+  "keywords": [
+    "servers"
+  ],
+  "author": "suiGn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suiGn/mdrn/issues"
+  },
+  "homepage": "https://github.com/suiGn/mdrn#readme"
+}
