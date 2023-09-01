@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 // Set up routes
 app.get('/', (req, res) => {
-    res.render('index', { title: 'WebSocket with Express and EJS' });
+    res.render('index', { title: 'Welcome to mdrn realms.' });
 });
 
 const server = http.createServer(app);
