@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+
+    <p>Status: <span id="status">Disconnected</span></p>
+
+    <!-- Message display area -->
+    <div id="messages"></div>
+
+    <!-- Message input form -->
+    <input type="text" id="channel" placeholder="Enter channel">
+    <input type="text" id="hash" placeholder="Enter hash">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        let socket = new WebSocket("ws://localhost:8080");
+        socket.onopen = function(e) {
+            document.getElementById('status').textContent = "Connected";
+        };
+        socket.onmessage = function(event) {
+            let incomingMsg = JSON.parse(event.data);
+            let messageDiv = document.getElementById('messages');
+            let newMessage = document.createElement('p');
+            newMessage.textContent = `Channel: ${incomingMsg.channel}, Hash: ${incomingMsg.hash}`;
+            messageDiv.appendChild(newMessage);
+        };
+
+        socket.onclose = function(event) {
+            if (event.wasClean) {
+                document.getElementById('status').textContent = "Connection closed cleanly";
+            } else {
+                document.getElementById('status').textContent = "Connection died";
+            }
+        };
+
+        socket.onerror = function(error) {
+            console.error(`[WebSocket Error]: ${error}`);
+        };
+
+        function sendMessage() {
+            let channel = document.getElementById('channel').value;
+            let hash = document.getElementById('hash').value;
+            let message = {
+                channel: channel,
+                hash: hash
+            };
+            socket.send(JSON.stringify(message));
+        }
+    </script>
+</body>
+</html>
