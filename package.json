@@ -4,8 +4,10 @@
   "description": "mdrn",
   "main": "server.js",
   "repoType": "App",
+  "type": "module",
   "scripts": {
-    "test": "test"
+    "dev": "vite",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",

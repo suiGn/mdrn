@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>mdrn</title>
-		<style>
-			body { margin: 0; }
-		</style>
-	</head>
-	<body>
-		<script type="module" src="/main.js"></script>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open World Grid</title>
+    <link rel="stylesheet" href="./src/styles/style.css">
+</head>
+<body>
+    <div id="container"></div>
+    <script type="module" src="./src/js/main.js"></script>
+    <script>
+        async function includeHTML(file) {
+            const response = await fetch(file);
+            const text = await response.text();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = text;
+            document.body.appendChild(tempDiv);
+        }
+
+        includeHTML('/draggable-button.html');
+    </script>
+</body>
 </html>
