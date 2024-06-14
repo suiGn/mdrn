@@ -1,5 +1,5 @@
-//./js/main.js
 import * as THREE from 'three';
+import { createWireframeSphere } from './wireframeSphere.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -108,10 +108,18 @@ const skyMaterial = new THREE.ShaderMaterial({
 const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
 scene.add(skyMesh);
 
+// Create the wireframe sphere
+const wireframeSphere = createWireframeSphere(scene);
+
 // Animation loop
 const animate = () => {
     requestAnimationFrame(animate);
     updateCameraPosition();
+
+    // Rotate the wireframe sphere
+    wireframeSphere.rotation.x += 0.01;
+    wireframeSphere.rotation.y += 0.01;
+
     renderer.render(scene, camera);
 };
 
@@ -123,3 +131,41 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// Append this code at the end of main.js
+
+let draggedItem = null;
+let offsetX = 0, offsetY = 0;
+
+document.querySelector('.button-circle').addEventListener('mousedown', function (e) {
+    e.preventDefault();
+    const rect = this.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    draggedItem = this;
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+});
+
+function onMouseMove(e) {
+    if (draggedItem) {
+        let newLeft = e.clientX - offsetX;
+        let newTop = e.clientY - offsetY;
+
+        // Ensure the button stays within the viewport
+        const rect = draggedItem.getBoundingClientRect();
+        if (newLeft < 0) newLeft = 0;
+        if (newTop < 0) newTop = 0;
+        if (newLeft + rect.width > window.innerWidth) newLeft = window.innerWidth - rect.width;
+        if (newTop + rect.height > window.innerHeight) newTop = window.innerHeight - rect.height;
+
+        draggedItem.style.left = newLeft + 'px';
+        draggedItem.style.top = newTop + 'px';
+    }
+}
+
+function onMouseUp() {
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+    draggedItem = null;
+}

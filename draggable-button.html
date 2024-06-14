@@ -29,37 +29,39 @@
     }
 </script>
 <style>
+.button-circle {
+    border: none;
+    outline: none;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow: 8px 8px 21px #bebebe34, -8px -8px 21px #ffffff;
+    font-size: 5rem;
+    color: #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    position: absolute;
+    top: 10px; /* Fix to top */
+    right: 10px; /* Fix to right */
+}
+
+.button-circle:hover {
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+}
+
+.button-circle:active {
+    background: #e0e0e0;
+}
+
+@media (max-width: 768px) {
     .button-circle {
-        border: none;
-        outline: none;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: linear-gradient(145deg, #cacaca, #f0f0f0);
-        box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-        font-size: 5rem;
-        color: #555;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        transition: background 0.3s ease-in-out;
-        position: absolute;
+        width: 200px;
+        height: 200px;
+        font-size: 3rem;
     }
-
-    .button-circle:hover {
-        background: linear-gradient(145deg, #f0f0f0, #cacaca);
-    }
-
-    .button-circle:active {
-        background: #e0e0e0;
-    }
-
-    @media (max-width: 768px) {
-        .button-circle {
-            width: 200px;
-            height: 200px;
-            font-size: 3rem;
-        }
-    }
+}
 </style>
