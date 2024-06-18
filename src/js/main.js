@@ -3,6 +3,7 @@ import { createWireframeSphere } from '../objects/wireframeSphere.js';
 import { createSkySphere } from '../objects/skySphere.js';
 import { createCamera, updateCameraPosition } from './cameraControl.js';
 import { loadTexture } from './Texture/textureLoader.js';
+import { createWireframeBox } from '../objects/box.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -30,16 +31,17 @@ document.addEventListener('keyup', (event) => {
 // Create:
 const skySphere = createSkySphere();
 scene.add(skySphere);
-const wireframeSphere = createWireframeSphere(scene, 0xff0000);
+const wireframeSphere = createWireframeSphere(scene, 0x0000ff);
 const wireframeSphere2 = createWireframeSphere(scene, 0x00ff00);
+const box = createWireframeBox(scene, 0x0000ff);
 
 // Animation loop
 const animate = () => {
 requestAnimationFrame(animate);
 updateCameraPosition(camera, keys);
 // Rotate the wireframe sphere
-//wireframeSphere.rotation.x += 0.01;
-//wireframeSphere.rotation.y += 0.01;
+wireframeSphere2.rotation.x += 0.01;
+wireframeSphere2.rotation.y += 0.01;
 renderer.render(scene, camera);
 };
 
