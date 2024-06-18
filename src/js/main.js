@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { createWireframeSphere } from './wireframeSphere.js';
-import { createSkySphere } from './skySphere.js';
+import { createWireframeSphere } from '../objects/wireframeSphere.js';
+import { createSkySphere } from '../objects/skySphere.js';
 import { createCamera, updateCameraPosition } from './cameraControl.js';
 import { loadTexture } from './Texture/textureLoader.js';
 
@@ -13,8 +13,6 @@ document.getElementById('container').appendChild(renderer.domElement);
 
 // Load the texture and set it as the background
 loadTexture('./starry_sky.jpg', scene);
-
-
 // Create an infinite grid
 const gridHelper = new THREE.GridHelper(1000, 1000, 0x555555, 0x555555);
 scene.add(gridHelper);
@@ -32,18 +30,17 @@ document.addEventListener('keyup', (event) => {
 // Create:
 const skySphere = createSkySphere();
 scene.add(skySphere);
-const wireframeSphere = createWireframeSphere(scene);
+const wireframeSphere = createWireframeSphere(scene, 0xff0000);
+const wireframeSphere2 = createWireframeSphere(scene, 0x00ff00);
 
 // Animation loop
 const animate = () => {
-    requestAnimationFrame(animate);
-    updateCameraPosition(camera, keys);
-
-    // Rotate the wireframe sphere
-    wireframeSphere.rotation.x += 0.01;
-    wireframeSphere.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
+requestAnimationFrame(animate);
+updateCameraPosition(camera, keys);
+// Rotate the wireframe sphere
+//wireframeSphere.rotation.x += 0.01;
+//wireframeSphere.rotation.y += 0.01;
+renderer.render(scene, camera);
 };
 
 animate();
@@ -70,6 +67,8 @@ document.querySelector('.button-circle').addEventListener('mousedown', function 
     window.addEventListener('mouseup', onMouseUp);
 });
 
+
+//(MOUSE MOVEMENT KEYBOARD)
 function onMouseMove(e) {
     if (draggedItem) {
         let newLeft = e.clientX - offsetX;

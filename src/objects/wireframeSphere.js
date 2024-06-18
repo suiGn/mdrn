@@ -1,10 +1,11 @@
 // mdrn/src/js/wireframeSphere.js
 import * as THREE from 'three';
 
-export function createWireframeSphere(scene) {
+export function createWireframeSphere(scene, color = 0x0000ff) {
     const geometry = new THREE.SphereGeometry(5, 32, 32);
     const wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
+        //blue color
+        color: color,
         wireframe: true,
     });
     const wireframeSphere = new THREE.Mesh(geometry, wireframeMaterial);
