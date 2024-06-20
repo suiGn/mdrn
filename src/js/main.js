@@ -14,6 +14,7 @@ document.getElementById('container').appendChild(renderer.domElement);
 
 // Load the texture and set it as the background
 loadTexture('./starry_sky.jpg', scene);
+
 // Create an infinite grid
 const gridHelper = new THREE.GridHelper(1000, 1000, 0x555555, 0x555555);
 scene.add(gridHelper);
@@ -28,21 +29,31 @@ document.addEventListener('keyup', (event) => {
     keys[event.code] = false;
 });
 
-// Create:
+// Create objects
 const skySphere = createSkySphere();
 scene.add(skySphere);
 const wireframeSphere = createWireframeSphere(scene, 0x0000ff);
 const wireframeSphere2 = createWireframeSphere(scene, 0x00ff00);
 const box = createWireframeBox(scene, 0x0000ff);
 
+// Create the rotating vector in 8-bit pixel art style
+const vectorLength = 5;
+const vectorGeometry = new THREE.BoxGeometry(0.2, vectorLength, 0.2);
+const vectorMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+
+const vector = new THREE.Mesh(vectorGeometry, vectorMaterial);
+vector.position.y = vectorLength / 2;
+scene.add(vector);
+
 // Animation loop
 const animate = () => {
-requestAnimationFrame(animate);
-updateCameraPosition(camera, keys);
-// Rotate the wireframe sphere
-wireframeSphere2.rotation.x += 0.01;
-wireframeSphere2.rotation.y += 0.01;
-renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    updateCameraPosition(camera, keys);
+
+    // Rotate the vector to simulate continuous rotation
+    vector.rotation.z += 0.01;
+
+    renderer.render(scene, camera);
 };
 
 animate();
@@ -54,8 +65,7 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Append this code at the end of main.js
-
+// Handle draggable button
 let draggedItem = null;
 let offsetX = 0, offsetY = 0;
 
@@ -69,8 +79,6 @@ document.querySelector('.button-circle').addEventListener('mousedown', function 
     window.addEventListener('mouseup', onMouseUp);
 });
 
-
-//(MOUSE MOVEMENT KEYBOARD)
 function onMouseMove(e) {
     if (draggedItem) {
         let newLeft = e.clientX - offsetX;

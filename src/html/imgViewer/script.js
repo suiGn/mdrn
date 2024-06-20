@@ -1,3 +1,4 @@
+//mdrn/src/html/imgViewer/script.js
 document.getElementById('searchButton').addEventListener('click', searchImages);
 
 let history = [];
